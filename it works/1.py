@@ -18,8 +18,7 @@ def welcome(message):
     bot.send_message(chat_id, 'Добро пожаловать в бот Спутник', reply_markup=keyboard)
 
 
-@bot.message_handler(
-    func=lambda message: message.text == '🤓 Экспериментальное задание №17')
+@bot.message_handler(func=lambda message: message.text == '🤓 Экспериментальное задание №17')
 def experimental_task_17(message):
     chat_id = message.chat.id
     keyboard = telebot.types.ReplyKeyboardMarkup()
@@ -35,8 +34,7 @@ def about_task(message):
     bot.send_message(message.chat.id, "Описание задания")
 
 
-@bot.message_handler(
-    func=lambda message: message.text == "Решения 19 типов этого задания")
+@bot.message_handler(func=lambda message: message.text == "Решения 19 типов этого задания")
 def choose_set(message):
     chat_id = message.chat.id
     keyboard = telebot.types.InlineKeyboardMarkup()
@@ -150,8 +148,49 @@ def choose_set(call):
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Выберите комплект", reply_markup=keyboard)
 
 
-@bot.message_handler(
-    func=lambda message: message.text == "Вернуться в главное меню")
+@bot.message_handler(func=lambda message: message.text == '📖 Ресурсы для подготовки')
+def resources(message):
+    chat_id = message.chat.id
+    keyboard = telebot.types.ReplyKeyboardMarkup()
+    button_1 = telebot.types.InlineKeyboardButton(text="Для ОГЭ")
+    button_2 = telebot.types.InlineKeyboardButton(text="Источники для изучения физики")
+    button_3 = telebot.types.InlineKeyboardButton(text="Полезные приложения и сайты для учебы")
+    button_4 = telebot.types.InlineKeyboardButton(text="Учебники по физике (углубленные)")
+    button_5 = telebot.types.InlineKeyboardButton(text="Вернуться в главное меню")
+    keyboard.add(button_1, button_2, button_3, button_4, button_5)
+    bot.send_message(chat_id, 'Выберите интересующий ресурс', reply_markup=keyboard)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Для ОГЭ')
+def for_oge(message):
+    bot.send_message(message.chat.id, "Что-то для ОГЭ")
+
+
+@bot.message_handler(func=lambda message: message.text == 'Источники для изучения физики')
+def sources_for_physics(message):
+    bot.send_message(message.chat.id, "Какие-то источники для изучения физики")
+
+
+@bot.message_handler(func=lambda message: message.text == 'Полезные приложения и сайты для учебы')
+def useful_applications(message):
+    bot.send_message(message.chat.id, "Какие-то полезные приложения и сайты для учебы")
+
+
+@bot.message_handler(func=lambda message: message.text == 'Учебники по физике (углубленные)')
+def advanced_physics(message):
+    bot.send_message(message.chat.id, "Какие-то учебники по физике (углубленные)")
+
+
+@bot.message_handler(func=lambda message: message.text == '✍️ О проекте')
+def about(message):
+    chat_id = message.chat.id
+    keyboard = telebot.types.ReplyKeyboardMarkup()
+    button_1 = telebot.types.InlineKeyboardButton(text="Вернуться в главное меню")
+    keyboard.add(button_1)
+    bot.send_message(chat_id, 'Описание проекта', reply_markup=keyboard)
+
+
+@bot.message_handler(func=lambda message: message.text == "Вернуться в главное меню")
 def welcome(message):
     chat_id = message.chat.id
     keyboard = telebot.types.ReplyKeyboardMarkup()
@@ -159,7 +198,7 @@ def welcome(message):
     button_2 = telebot.types.InlineKeyboardButton(text="📖 Ресурсы для подготовки")
     button_3 = telebot.types.InlineKeyboardButton(text="✍️ О проекте")
     keyboard.add(button_1, button_2, button_3)
-    bot.send_message(chat_id, 'Добро пожаловать в бота сбора обратной связи', reply_markup=keyboard)
+    bot.send_message(chat_id, 'Добро пожаловать в бот Спутник', reply_markup=keyboard)
 
 
 if __name__ == '__main__':
