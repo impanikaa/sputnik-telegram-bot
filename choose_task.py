@@ -45,7 +45,7 @@ START_ROUTES, END_ROUTES = range(2)
 (BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, FIRST_T, SECOND_T,
  THIRD_T, FOURTH_T, FIFTH_T, SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T,
  ELEVENTH_T, TWELFTH_T, THIRTEENTH_T, FOURTEENTH_T, FIFTEENTH_T,
- SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T, NINTEENTH_T, END) = range(26)
+ SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T, NINETEENTH_T, END) = range(26)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -190,7 +190,7 @@ async def sixth_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         [
             InlineKeyboardButton("17", callback_data=str(SEVENTEENTH_T)),
             InlineKeyboardButton("18", callback_data=str(EIGHTEENTH_T)),
-            InlineKeyboardButton("19", callback_data=str(NINTEENTH_T)),
+            InlineKeyboardButton("19", callback_data=str(NINETEENTH_T)),
         ],
         [InlineKeyboardButton("Назад", callback_data=str(BACK))]
     ]
@@ -345,7 +345,7 @@ async def eighteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
     return ConversationHandler.END
 
 
-async def ninteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+async def nineteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
         -> int:
     query = update.callback_query
     await query.answer()
@@ -428,8 +428,8 @@ def main() -> None:
                                      pattern="^" + str(SEVENTEENTH_T) + "$"),
                 CallbackQueryHandler(eighteenth_task,
                                      pattern="^" + str(EIGHTEENTH_T) + "$"),
-                CallbackQueryHandler(ninteenth_task,
-                                     pattern="^" + str(NINTEENTH_T) + "$"),
+                CallbackQueryHandler(nineteenth_task,
+                                     pattern="^" + str(NINETEENTH_T) + "$"),
             ],
         },
         fallbacks=[CommandHandler("start", start)],
