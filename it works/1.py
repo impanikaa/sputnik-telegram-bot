@@ -44,7 +44,6 @@ def choose_set(message):
     button_fourth = telebot.types.InlineKeyboardButton(text="4", callback_data='fourth_s')
     button_fifth = telebot.types.InlineKeyboardButton(text="6", callback_data='sixth_s')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth)
-
     bot.send_message(chat_id, f'Выберите комплект', reply_markup=keyboard)
 
 
@@ -61,7 +60,6 @@ def first_set(call):
     button_fifth = telebot.types.InlineKeyboardButton(text="5", callback_data='fifth_t')
     button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth, button_back)
-
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Первый комплект, выберите задание",
                           reply_markup=keyboard)
 
@@ -77,7 +75,6 @@ def second_set(call):
     button_third = telebot.types.InlineKeyboardButton(text="8", callback_data='eighth_t')
     button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_back)
-
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Второй комплект, выберите задание",
                           reply_markup=keyboard)
 
@@ -94,7 +91,6 @@ def third_set(call):
     button_fourth = telebot.types.InlineKeyboardButton(text="12", callback_data='twelfth_t')
     button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_back)
-
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Третий комплект, выберите задание",
                           reply_markup=keyboard)
 
@@ -111,7 +107,6 @@ def fourth_set(call):
     button_fourth = telebot.types.InlineKeyboardButton(text="16", callback_data='sixteenth_t')
     button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_back)
-
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Четвёртый комплект, выберите задание",
                           reply_markup=keyboard)
 
@@ -127,9 +122,160 @@ def sixth_set(call):
     button_third = telebot.types.InlineKeyboardButton(text="19", callback_data='nineteenth_t')
     button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_back)
-
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Шестой комплект, выберите задание",
                           reply_markup=keyboard)
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'first_t')
+def first_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 1')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'second_t')
+def second_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 2')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'third_t')
+def third_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 3')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'fourth_t')
+def fourth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 4')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'fifth_t')
+def fifth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 5')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'sixth_t')
+def sixth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 6')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'seventh_t')
+def seventh_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 7')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'eighth_t')
+def eighth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 8')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'ninth_t')
+def ninth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 9')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'tenth_t')
+def tenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 10')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'eleventh_t')
+def eleventh_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 11')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'twelfth_t')
+def twelfth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 12')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'thirteenth_t')
+def thirteenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 13')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'fourteenth_t')
+def fourteenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 14')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'fifteenth_t')
+def fifteenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 15')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'sixteenth_t')
+def sixteenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 16')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'seventeenth_t')
+def seventeenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 17')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'eighteenth_t')
+def eighteenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 19')
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'nineteenth_t')
+def nineteenth_task(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача 19')
 
 
 @bot.callback_query_handler(func=lambda call: call.data == 'back')
@@ -144,7 +290,6 @@ def choose_set(call):
     button_fourth = telebot.types.InlineKeyboardButton(text="4", callback_data='fourth_s')
     button_fifth = telebot.types.InlineKeyboardButton(text="6", callback_data='sixth_s')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth)
-
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Выберите комплект", reply_markup=keyboard)
 
 
