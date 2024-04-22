@@ -1,6 +1,7 @@
 import telebot
 from telebot import types  # для указания типов
-from telegram.config import BOT_TOKEN
+from config import BOT_TOKEN
+from choose_task import main
 
 bot = telebot.TeleBot(BOT_TOKEN)
 

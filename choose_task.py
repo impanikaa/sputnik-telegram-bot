@@ -25,7 +25,7 @@ from telegram.ext import (
     ConversationHandler,
 )
 import telebot
-from telegram.config import BOT_TOKEN
+from config import BOT_TOKEN
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -43,12 +43,9 @@ logger = logging.getLogger(__name__)
 START_ROUTES, END_ROUTES = range(2)
 # Callback data
 (BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, FIRST_T, SECOND_T,
- THIRD_T, FOURTH_T, FIFTH_T,
- SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T, ELEVENTH_T, TWELFTH_T,
- THIRTEENTH_T,
- FOURTEENTH_T, FIFTEENTH_T, SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T,
- NINTEENTH_T, END) = (
-    range(26))
+ THIRD_T, FOURTH_T, FIFTH_T, SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T,
+ ELEVENTH_T, TWELFTH_T, THIRTEENTH_T, FOURTEENTH_T, FIFTEENTH_T,
+ SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T, NINTEENTH_T, END) = range(26)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
