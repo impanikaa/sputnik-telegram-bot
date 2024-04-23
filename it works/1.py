@@ -1,5 +1,4 @@
 import telebot
-from telebot import types
 from config import TOKEN
 
 bot = telebot.TeleBot(TOKEN)
