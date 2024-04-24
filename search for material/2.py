@@ -1,7 +1,6 @@
 import telebot
 from telebot import types  # для указания типов
 from config import BOT_TOKEN
-import choose_task
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
