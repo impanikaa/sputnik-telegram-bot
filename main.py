@@ -151,21 +151,27 @@ def task_information(call):
                           reply_markup=keyboard)
 
 
-@bot.callback_query_handler(func=lambda call: call.data[1:7] == ('_link_' or '_video'))
+@bot.callback_query_handler(func=lambda call: (call.data[1:7] == '_link_' or call.data[1:7] == '_video'))
 def links(call):
+    message = call.message
+    chat_id = message.chat.id
+    message_id = message.message_id
     s = call.data[2:-1]
     if s[-1] != '_':
         s = s[:-2]
     else:
         s = s[:-1]
     p = call.data.split('_')[-1]
-    message = call.message
-    chat_id = message.chat.id
-    message_id = message.message_id
+    print(tasks[p][s])
+    if call.data[1:7] == '_video':
+        t = 'https://www.youtube.com/watch?v=' + tasks[p][s]
+    else:
+        t = tasks[p][s]
+    print(t)
     keyboard = telebot.types.InlineKeyboardMarkup()
     button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data=call.data[:2]+'task_'+p)
     keyboard.add(button_back)
-    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=tasks[p][s],
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=t,
                           reply_markup=keyboard)
 
 
