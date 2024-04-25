@@ -7,7 +7,10 @@ bot = telebot.TeleBot(BOT_TOKEN)
 users = {}
 with open('documents.json') as f:
     json_string = f.read()
-tasks = json.loads(json_string)
+documents = json.loads(json_string)
+with open('texts.json', encoding='utf-8', mode='r') as f:
+    json_string = f.read()
+texts = json.loads(json_string)
 
 
 @bot.message_handler(commands=['start'])
@@ -18,7 +21,7 @@ def welcome(message):
     button_2 = telebot.types.InlineKeyboardButton(text="📖 Ресурсы для подготовки")
     button_3 = telebot.types.InlineKeyboardButton(text="✍️ О проекте")
     keyboard.add(button_1, button_2, button_3)
-    bot.send_message(chat_id, 'Добро пожаловать в бот Спутник', reply_markup=keyboard)
+    bot.send_message(chat_id, texts['start'], reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == '🤓 Экспериментальное задание №17')
@@ -29,12 +32,12 @@ def experimental_task_17(message):
     button_2 = telebot.types.InlineKeyboardButton(text="Решения 19 типов этого задания")
     button_3 = telebot.types.InlineKeyboardButton(text="Вернуться в главное меню")
     keyboard.add(button_1, button_2, button_3)
-    bot.send_message(chat_id, 'Что Вас интересует?', reply_markup=keyboard)
+    bot.send_message(chat_id, texts['experimental'], reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == "О задании")
 def about_task(message):
-    bot.send_message(message.chat.id, "Описание задания")
+    bot.send_message(message.chat.id, texts['about'])
 
 
 @bot.message_handler(func=lambda message: message.text == "Решения 19 типов этого задания")
@@ -136,16 +139,16 @@ def task_information(call):
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
     button_first = telebot.types.InlineKeyboardButton(text="Таблица",
-                                                      callback_data=call.data[:2]+'link_table'+call.data[6:])
+                                                      callback_data=call.data[:2] + 'link_table' + call.data[6:])
     button_second = telebot.types.InlineKeyboardButton(text="Инстурцкция",
-                                                       callback_data=call.data[:2]+'link_instruction'+call.data[6:])
+                                                       callback_data=call.data[:2] + 'link_instruction' + call.data[6:])
     button_third = telebot.types.InlineKeyboardButton(text="Бланк",
-                                                      callback_data=call.data[:2]+'link_blank'+call.data[6:])
+                                                      callback_data=call.data[:2] + 'link_blank' + call.data[6:])
     button_fourth = telebot.types.InlineKeyboardButton(text="Схема",
-                                                       callback_data=call.data[:2]+'link_scheme'+call.data[6:])
+                                                       callback_data=call.data[:2] + 'link_scheme' + call.data[6:])
     button_fifth = telebot.types.InlineKeyboardButton(text="Видео",
-                                                      callback_data=call.data[:2]+'video_id'+call.data[6:])
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='set_'+call.data[0])
+                                                      callback_data=call.data[:2] + 'video_id' + call.data[6:])
+    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='set_' + call.data[0])
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth, button_back)
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача ' + call.data[7:],
                           reply_markup=keyboard)
@@ -162,14 +165,12 @@ def links(call):
     else:
         s = s[:-1]
     p = call.data.split('_')[-1]
-    print(tasks[p][s])
-    if call.data[1:7] == '_video':
-        t = 'https://www.youtube.com/watch?v=' + tasks[p][s]
+    if 'video' in call.data[1:7]:
+        t = texts[call.data.split('_')[1]] + 'https://www.youtube.com/watch?v=' + documents[p][s]
     else:
-        t = tasks[p][s]
-    print(t)
+        t = texts[call.data.split('_')[2]] + 'https://disk.yandex.ru/d/' + documents[p][s]
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data=call.data[:2]+'task_'+p)
+    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data=call.data[:2] + 'task_' + p)
     keyboard.add(button_back)
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=t,
                           reply_markup=keyboard)
@@ -240,7 +241,7 @@ def welcome(message):
     button_2 = telebot.types.InlineKeyboardButton(text="📖 Ресурсы для подготовки")
     button_3 = telebot.types.InlineKeyboardButton(text="✍️ О проекте")
     keyboard.add(button_1, button_2, button_3)
-    bot.send_message(chat_id, 'Добро пожаловать в бот Спутник', reply_markup=keyboard)
+    bot.send_message(chat_id, texts['start'], reply_markup=keyboard)
 
 
 if __name__ == '__main__':
