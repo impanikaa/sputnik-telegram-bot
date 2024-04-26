@@ -3,7 +3,7 @@ import logging
 import datetime
 from telegram.ext import Application, MessageHandler, filters
 from config import BOT_TOKEN
-# Добавим необходимый объект из модуля telegram.ext
+# Добавим необходимый объект из модуля search for material.ext
 from telegram.ext import CommandHandler
 
 

@@ -23,9 +23,12 @@ from telegram.ext import (
     CommandHandler,
     ContextTypes,
     ConversationHandler,
+    MessageHandler,
+    filters
 )
 import telebot
-from telegram.config import BOT_TOKEN
+from telebot import types
+from config import BOT_TOKEN
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -43,15 +46,117 @@ logger = logging.getLogger(__name__)
 START_ROUTES, END_ROUTES = range(2)
 # Callback data
 (BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, FIRST_T, SECOND_T,
- THIRD_T, FOURTH_T, FIFTH_T,
- SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T, ELEVENTH_T, TWELFTH_T,
- THIRTEENTH_T,
- FOURTEENTH_T, FIFTEENTH_T, SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T,
- NINTEENTH_T, END) = (
-    range(26))
+ THIRD_T, FOURTH_T, FIFTH_T, SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T,
+ ELEVENTH_T, TWELFTH_T, THIRTEENTH_T, FOURTEENTH_T, FIFTEENTH_T,
+ SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T, NINTEENTH_T, END) = range(26)
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+@bot.message_handler(commands=['start'])
+def start(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("🤓 Экспериментальное задание №17")
+    btn2 = types.KeyboardButton("📖 Ресурсы для подготовки")
+    btn3 = types.KeyboardButton("✍️ О проекте")
+    markup.add(btn1, btn2, btn3)
+    bot.send_message(message.chat.id,
+                     text="Привет, {0.first_name}! "
+                          "Я бот для подготовки к ОГЭ по физике".format(
+                         message.from_user), reply_markup=markup)
+
+
+@bot.message_handler(content_types=['text'])
+def func(message):
+    if message.text == "🤓 Экспериментальное задание №17":
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton("О задании")
+        btn2 = types.KeyboardButton("Решения 19 типов этого задания")
+        back = types.KeyboardButton("Вернуться в главное меню")
+        markup.add(btn1, btn2, back)
+        bot.send_message(message.chat.id, text="Что Вас интересует?",
+                         reply_markup=markup)
+
+    elif message.text == "О задании":
+        application = Application.builder().token(BOT_TOKEN).build()
+
+        # Setup conversation handler with the states FIRST and SECOND
+        # Use the pattern parameter to pass CallbackQueries with specific
+        # data pattern to the corresponding handlers.
+        # ^ means "start of line/string"
+        # $ means "end of line/string"
+        # So ^ABC$ will only allow 'ABC'
+        conv_handler = ConversationHandler(
+            entry_points=[CommandHandler("start", start1)],
+            states={
+                START_ROUTES: [
+                    CallbackQueryHandler(first_set,
+                                         pattern="^" + str(FIRST_S) + "$"),
+                    CallbackQueryHandler(second_set,
+                                         pattern="^" + str(SECOND_S) + "$"),
+                    CallbackQueryHandler(third_set,
+                                         pattern="^" + str(THIRD_S) + "$"),
+                    CallbackQueryHandler(fourth_set,
+                                         pattern="^" + str(FOURTH_S) + "$"),
+                    CallbackQueryHandler(sixth_set,
+                                         pattern="^" + str(FIFTH_S) + "$"),
+                ],
+                END_ROUTES: [
+                    CallbackQueryHandler(start_over,
+                                         pattern="^" + str(BACK) + "$"),
+                    CallbackQueryHandler(first_task,
+                                         pattern="^" + str(FIRST_T) + "$"),
+                    CallbackQueryHandler(second_task,
+                                         pattern="^" + str(SECOND_T) + "$"),
+                    CallbackQueryHandler(third_task,
+                                         pattern="^" + str(THIRD_T) + "$"),
+                    CallbackQueryHandler(fourth_task,
+                                         pattern="^" + str(FOURTH_T) + "$"),
+                    CallbackQueryHandler(fifth_task,
+                                         pattern="^" + str(FIFTH_T) + "$"),
+                    CallbackQueryHandler(sixth_task,
+                                         pattern="^" + str(SIXTH_T) + "$"),
+                    CallbackQueryHandler(seventh_task,
+                                         pattern="^" + str(SEVENTH_T) + "$"),
+                    CallbackQueryHandler(eighth_task,
+                                         pattern="^" + str(EIGHTH_T) + "$"),
+                    CallbackQueryHandler(ninth_task,
+                                         pattern="^" + str(NINTH_T) + "$"),
+                    CallbackQueryHandler(tenth_task,
+                                         pattern="^" + str(TENTH_T) + "$"),
+                    CallbackQueryHandler(eleventh_task,
+                                         pattern="^" + str(ELEVENTH_T) + "$"),
+                    CallbackQueryHandler(twelfth_task,
+                                         pattern="^" + str(TWELFTH_T) + "$"),
+                    CallbackQueryHandler(thirteenth_task,
+                                         pattern="^" + str(
+                                             THIRTEENTH_T) + "$"),
+                    CallbackQueryHandler(fourteenth_task,
+                                         pattern="^" + str(
+                                             FOURTEENTH_T) + "$"),
+                    CallbackQueryHandler(fifteenth_task,
+                                         pattern="^" + str(FIFTEENTH_T) + "$"),
+                    CallbackQueryHandler(sixteenth_task,
+                                         pattern="^" + str(SIXTEENTH_T) + "$"),
+                    CallbackQueryHandler(seventeenth_task,
+                                         pattern="^" + str(
+                                             SEVENTEENTH_T) + "$"),
+                    CallbackQueryHandler(eighteenth_task,
+                                         pattern="^" + str(
+                                             EIGHTEENTH_T) + "$"),
+                    CallbackQueryHandler(ninteenth_task,
+                                         pattern="^" + str(NINTEENTH_T) + "$"),
+                ],
+            },
+            fallbacks=[CommandHandler("start", start1)],
+        )
+
+        # Add ConversationHandler to application that will be used for handling updates
+        application.add_handler(conv_handler)
+
+        # Run the bot until the user presses Ctrl-C
+        application.run_polling(allowed_updates=Update.ALL_TYPES)
+
+
+async def start1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Send message on `/start`."""
     # Get user that sent /start and log his name
     user = update.message.from_user
@@ -367,83 +472,13 @@ async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 def main() -> None:
+    bot.polling()
     """Run the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token(BOT_TOKEN).build()
-
-    # Setup conversation handler with the states FIRST and SECOND
-    # Use the pattern parameter to pass CallbackQueries with specific
-    # data pattern to the corresponding handlers.
-    # ^ means "start of line/string"
-    # $ means "end of line/string"
-    # So ^ABC$ will only allow 'ABC'
-    conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("start", start)],
-        states={
-            START_ROUTES: [
-                CallbackQueryHandler(first_set,
-                                     pattern="^" + str(FIRST_S) + "$"),
-                CallbackQueryHandler(second_set,
-                                     pattern="^" + str(SECOND_S) + "$"),
-                CallbackQueryHandler(third_set,
-                                     pattern="^" + str(THIRD_S) + "$"),
-                CallbackQueryHandler(fourth_set,
-                                     pattern="^" + str(FOURTH_S) + "$"),
-                CallbackQueryHandler(sixth_set,
-                                     pattern="^" + str(FIFTH_S) + "$"),
-            ],
-            END_ROUTES: [
-                CallbackQueryHandler(start_over,
-                                     pattern="^" + str(BACK) + "$"),
-                CallbackQueryHandler(first_task,
-                                     pattern="^" + str(FIRST_T) + "$"),
-                CallbackQueryHandler(second_task,
-                                     pattern="^" + str(SECOND_T) + "$"),
-                CallbackQueryHandler(third_task,
-                                     pattern="^" + str(THIRD_T) + "$"),
-                CallbackQueryHandler(fourth_task,
-                                     pattern="^" + str(FOURTH_T) + "$"),
-                CallbackQueryHandler(fifth_task,
-                                     pattern="^" + str(FIFTH_T) + "$"),
-                CallbackQueryHandler(sixth_task,
-                                     pattern="^" + str(SIXTH_T) + "$"),
-                CallbackQueryHandler(seventh_task,
-                                     pattern="^" + str(SEVENTH_T) + "$"),
-                CallbackQueryHandler(eighth_task,
-                                     pattern="^" + str(EIGHTH_T) + "$"),
-                CallbackQueryHandler(ninth_task,
-                                     pattern="^" + str(NINTH_T) + "$"),
-                CallbackQueryHandler(tenth_task,
-                                     pattern="^" + str(TENTH_T) + "$"),
-                CallbackQueryHandler(eleventh_task,
-                                     pattern="^" + str(ELEVENTH_T) + "$"),
-                CallbackQueryHandler(twelfth_task,
-                                     pattern="^" + str(TWELFTH_T) + "$"),
-                CallbackQueryHandler(thirteenth_task,
-                                     pattern="^" + str(THIRTEENTH_T) + "$"),
-                CallbackQueryHandler(fourteenth_task,
-                                     pattern="^" + str(FOURTEENTH_T) + "$"),
-                CallbackQueryHandler(fifteenth_task,
-                                     pattern="^" + str(FIFTEENTH_T) + "$"),
-                CallbackQueryHandler(sixteenth_task,
-                                     pattern="^" + str(SIXTEENTH_T) + "$"),
-                CallbackQueryHandler(seventeenth_task,
-                                     pattern="^" + str(SEVENTEENTH_T) + "$"),
-                CallbackQueryHandler(eighteenth_task,
-                                     pattern="^" + str(EIGHTEENTH_T) + "$"),
-                CallbackQueryHandler(ninteenth_task,
-                                     pattern="^" + str(NINTEENTH_T) + "$"),
-            ],
-        },
-        fallbacks=[CommandHandler("start", start)],
-    )
-
-    # Add ConversationHandler to application that will be used for handling updates
-    application.add_handler(conv_handler)
-
-    # Run the bot until the user presses Ctrl-C
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
-if __name__ == "__main__":
+
+# Запускаем функцию main() в случае запуска скрипта.
+if __name__ == '__main__':
     main()
+

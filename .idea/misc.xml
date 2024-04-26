@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
+<<<<<<< HEAD
     <option name="sdkName" value="Python 3.11 (sputnikBot) (2)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (sputnikBot) (2)" project-jdk-type="Python SDK" />
+=======
+    <option name="sdkName" value="Python 3.12 (sputnik-telegram-bot)" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (sputnik-telegram-bot)" project-jdk-type="Python SDK" />
+>>>>>>> ed3ca9278a94a6496d0ca9a53def85be69b0d3c0
 </project>

@@ -10,7 +10,7 @@ import logging
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
-from telegram.config import BOT_TOKEN
+from config import BOT_TOKEN
 
 # Enable logging
 logging.basicConfig(
