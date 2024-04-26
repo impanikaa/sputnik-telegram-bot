@@ -1,3 +1,5 @@
+import time
+
 import telebot
 import json
 
@@ -28,7 +30,23 @@ def welcome(message):
 @bot.message_handler(func=lambda message: message.text == '✍️ О проекте')
 def about_project(message):
     chat_id = message.chat.id
-    bot.send_message(chat_id, texts['about_project'])
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    button_first = telebot.types.InlineKeyboardButton(text="Сможешь ли хорошо сдать ОГЭ?", callback_data='casino')
+    keyboard.add(button_first)
+    bot.send_message(chat_id, texts['about_project'], reply_markup=keyboard)
+
+
+@bot.callback_query_handler(func=lambda call: call.data == 'casino')
+def casino(call):
+    message = call.message
+    chat_id = message.chat.id
+    bot.send_dice(chat_id=chat_id, emoji="🎰")
+
+
+@bot.message_handler(content_types=['dice'])
+def about_project(message):
+    chat_id = message.chat.id
+    bot.send_dice(chat_id=chat_id, emoji="🎰")
 
 
 @bot.message_handler(func=lambda message: message.text == '🤓 Экспериментальное задание №17')
@@ -244,13 +262,13 @@ def advanced_physics(message):
     bot.send_message(message.chat.id, texts['books-resources'])
 
 
-@bot.message_handler(func=lambda message: message.text == '✍️ О проекте')
-def about(message):
-    chat_id = message.chat.id
-    keyboard = telebot.types.ReplyKeyboardMarkup()
-    button_1 = telebot.types.InlineKeyboardButton(text="◀️ Вернуться в главное меню")
-    keyboard.add(button_1)
-    bot.send_message(chat_id, 'Описание проекта', reply_markup=keyboard)
+# @bot.message_handler(func=lambda message: message.text == '✍️ О проекте')
+# def about(message):
+#     chat_id = message.chat.id
+#     keyboard = telebot.types.ReplyKeyboardMarkup()
+#     button_1 = telebot.types.InlineKeyboardButton(text="◀️ Вернуться в главное меню")
+#     keyboard.add(button_1)
+#     bot.send_message(chat_id, 'Описание проекта', reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == "◀️ Вернуться в главное меню")
