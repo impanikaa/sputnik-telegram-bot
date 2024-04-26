@@ -24,7 +24,7 @@ def welcome(message):
     button_2 = telebot.types.InlineKeyboardButton(text="📖 Ресурсы для подготовки")
     button_3 = telebot.types.InlineKeyboardButton(text="✍️ О проекте")
     keyboard.add(button_1, button_2, button_3)
-    bot.send_message(chat_id, texts['start'], reply_markup=keyboard)
+    bot.send_message(chat_id=chat_id, text=texts['start'], reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == '✍️ О проекте')
@@ -33,20 +33,21 @@ def about_project(message):
     keyboard = telebot.types.InlineKeyboardMarkup()
     button_first = telebot.types.InlineKeyboardButton(text="Сможешь ли хорошо сдать ОГЭ?", callback_data='casino')
     keyboard.add(button_first)
-    bot.send_message(chat_id, texts['about_project'], reply_markup=keyboard)
+    bot.send_message(chat_id=chat_id, text=texts['about_project'], reply_markup=keyboard)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == 'casino')
 def casino(call):
     message = call.message
     chat_id = message.chat.id
-    bot.send_dice(chat_id=chat_id, emoji="🎰")
-
-
-@bot.message_handler(content_types=['dice'])
-def about_project(message):
-    chat_id = message.chat.id
-    bot.send_dice(chat_id=chat_id, emoji="🎰")
+    value = bot.send_dice(chat_id=chat_id, emoji="🎰").dice.value
+    time.sleep(2)
+    if value in [1, 22, 43, 64]:
+        bot.send_message(chat_id=chat_id, text='Поздравляем с отличными знаниями и оценкой 5')
+    if value in [2, 3, 4, 6, 9, 11, 13, 16, 17, 18, 21, 23, 24, 26, 27, 30, 32, 33, 35, 38, 39, 41, 42, 44, 47, 48, 49, 52, 54, 56, 59, 60, 61, 62, 63]:
+        bot.send_message(chat_id=chat_id, text='Вы можете расчитывать на оценку 4')
+    else:
+        bot.send_message(chat_id=chat_id, text='К сожалению, сейчас ваши знания дотягивают только до оценки 3')
 
 
 @bot.message_handler(func=lambda message: message.text == '🤓 Экспериментальное задание №17')
@@ -57,7 +58,7 @@ def experimental_task_17(message):
     button_2 = telebot.types.InlineKeyboardButton(text="✅ Решения 19 типов задания №17")
     button_3 = telebot.types.InlineKeyboardButton(text="◀️ Вернуться в главное меню")
     keyboard.add(button_1, button_2, button_3)
-    bot.send_message(chat_id, texts['experimental'], reply_markup=keyboard)
+    bot.send_message(chat_id=chat_id, text=texts['experimental'], reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == "📌 О задании")
@@ -79,7 +80,7 @@ def choose_set(message):
     button_fifth = telebot.types.InlineKeyboardButton(text="№6. Простейшие механизмы: рычаги и блоки",
                                                       callback_data='set_6')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth)
-    bot.send_message(chat_id, f'Выберите комплект:', reply_markup=keyboard)
+    bot.send_message(chat_id=chat_id, text='Выберите комплект:', reply_markup=keyboard)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == 'set_1')
