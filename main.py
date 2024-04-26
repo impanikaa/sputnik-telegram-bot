@@ -1,8 +1,9 @@
 import telebot
 import json
+
 from config import BOT_TOKEN
 
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot("BOT_TOKEN")
 
 users = {}
 with open('documents.json') as f:
@@ -28,29 +29,33 @@ def welcome(message):
 def experimental_task_17(message):
     chat_id = message.chat.id
     keyboard = telebot.types.ReplyKeyboardMarkup()
-    button_1 = telebot.types.InlineKeyboardButton(text="О задании")
-    button_2 = telebot.types.InlineKeyboardButton(text="Решения 19 типов этого задания")
-    button_3 = telebot.types.InlineKeyboardButton(text="Вернуться в главное меню")
+    button_1 = telebot.types.InlineKeyboardButton(text="📌 О задании")
+    button_2 = telebot.types.InlineKeyboardButton(text="✅ Решения 19 типов задания №17")
+    button_3 = telebot.types.InlineKeyboardButton(text="◀️ Вернуться в главное меню")
     keyboard.add(button_1, button_2, button_3)
     bot.send_message(chat_id, texts['experimental'], reply_markup=keyboard)
 
 
-@bot.message_handler(func=lambda message: message.text == "О задании")
+@bot.message_handler(func=lambda message: message.text == "📌 О задании")
 def about_task(message):
     bot.send_message(message.chat.id, texts['about'])
 
 
-@bot.message_handler(func=lambda message: message.text == "Решения 19 типов этого задания")
+@bot.message_handler(func=lambda message: message.text == "✅ Решения 19 типов задания №17")
 def choose_set(message):
     chat_id = message.chat.id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="1", callback_data='set_1')
-    button_second = telebot.types.InlineKeyboardButton(text="2", callback_data='set_2')
-    button_third = telebot.types.InlineKeyboardButton(text="3", callback_data='set_3')
-    button_fourth = telebot.types.InlineKeyboardButton(text="4", callback_data='set_4')
-    button_fifth = telebot.types.InlineKeyboardButton(text="6", callback_data='set_5')
+    button_first = telebot.types.InlineKeyboardButton(text="№1. Выталкивающая сила и её свойства",
+                                                      callback_data='set_1')
+    button_second = telebot.types.InlineKeyboardButton(text="№2. Жесткость пружины и коэффициенты трения",
+                                                       callback_data='set_2')
+    button_third = telebot.types.InlineKeyboardButton(text="№3. Электричество",
+                                                      callback_data='set_3')
+    button_fourth = telebot.types.InlineKeyboardButton(text="№4. Геометрическая оптика", callback_data='set_4')
+    button_fifth = telebot.types.InlineKeyboardButton(text="№6. Простейшие механизмы: рычаги и блоки",
+                                                      callback_data='set_5')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth)
-    bot.send_message(chat_id, f'Выберите комплект', reply_markup=keyboard)
+    bot.send_message(chat_id, f'Выберите комплект:', reply_markup=keyboard)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == 'set_1')
@@ -59,14 +64,16 @@ def first_set(call):
     chat_id = message.chat.id
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="1", callback_data='1_task_1')
-    button_second = telebot.types.InlineKeyboardButton(text="2", callback_data='1_task_2')
-    button_third = telebot.types.InlineKeyboardButton(text="3", callback_data='1_task_3')
-    button_fourth = telebot.types.InlineKeyboardButton(text="4", callback_data='1_task_4')
-    button_fifth = telebot.types.InlineKeyboardButton(text="5", callback_data='1_task_5')
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
+    button_first = telebot.types.InlineKeyboardButton(text="1. Измерение плотности", callback_data='1_task_1')
+    button_second = telebot.types.InlineKeyboardButton(text="2. Измерение выталкивающей силы", callback_data='1_task_2')
+    button_third = telebot.types.InlineKeyboardButton(
+        text="3. Исследование зависимости Архимедовой силы от объема погруженной части тела", callback_data='1_task_3')
+    button_fourth = telebot.types.InlineKeyboardButton(
+        text="4. Исследование зависимости Архимедовой силы от плотности жидкости", callback_data='1_task_4')
+    button_fifth = telebot.types.InlineKeyboardButton(text="5. Исследование зависимости Архимедовой силы от массы тела", callback_data='1_task_5')
+    button_back = telebot.types.InlineKeyboardButton(text="◀️ Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth, button_back)
-    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Первый комплект, выберите задание",
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="✅ Комплект №1. Выберите задание (1-5)",
                           reply_markup=keyboard)
 
 
@@ -76,12 +83,12 @@ def second_set(call):
     chat_id = message.chat.id
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="6", callback_data='2_task_6')
-    button_second = telebot.types.InlineKeyboardButton(text="7", callback_data='2_task_7')
-    button_third = telebot.types.InlineKeyboardButton(text="8", callback_data='2_task_8')
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
+    button_first = telebot.types.InlineKeyboardButton(text="6. Измерение жесткости пружины", callback_data='2_task_6')
+    button_second = telebot.types.InlineKeyboardButton(text="7. Измерение коэффициента трения", callback_data='2_task_7')
+    button_third = telebot.types.InlineKeyboardButton(text="8. Измерение работы силы трения", callback_data='2_task_8')
+    button_back = telebot.types.InlineKeyboardButton(text="◀️ Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_back)
-    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Второй комплект, выберите задание",
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="✅ Комплект №2. Выберите задание (6-8)",
                           reply_markup=keyboard)
 
 
@@ -91,13 +98,13 @@ def third_set(call):
     chat_id = message.chat.id
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="9", callback_data='3_task_9')
-    button_second = telebot.types.InlineKeyboardButton(text="10", callback_data='3_task_10')
-    button_third = telebot.types.InlineKeyboardButton(text="11", callback_data='3_task_11')
-    button_fourth = telebot.types.InlineKeyboardButton(text="12", callback_data='3_task_12')
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
+    button_first = telebot.types.InlineKeyboardButton(text="9. Измерение сопротивления", callback_data='3_task_9')
+    button_second = telebot.types.InlineKeyboardButton(text="10. Опыты с проволочными сопротивлениями", callback_data='3_task_10')
+    button_third = telebot.types.InlineKeyboardButton(text="11. Измерение мощности", callback_data='3_task_11')
+    button_fourth = telebot.types.InlineKeyboardButton(text="12. Работа тока", callback_data='3_task_12')
+    button_back = telebot.types.InlineKeyboardButton(text="◀️ Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_back)
-    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Третий комплект, выберите задание",
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="✅ Комплект №3. Выберите задание (9-12)",
                           reply_markup=keyboard)
 
 
@@ -107,13 +114,13 @@ def fourth_set(call):
     chat_id = message.chat.id
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="13", callback_data='4_task_13')
-    button_second = telebot.types.InlineKeyboardButton(text="14", callback_data='4_task_14')
-    button_third = telebot.types.InlineKeyboardButton(text="15", callback_data='4_task_15')
-    button_fourth = telebot.types.InlineKeyboardButton(text="16", callback_data='4_task_16')
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
+    button_first = telebot.types.InlineKeyboardButton(text="13. Оптическая сила линзы", callback_data='4_task_13')
+    button_second = telebot.types.InlineKeyboardButton(text="14. Фокусное расстояние линзы", callback_data='4_task_14')
+    button_third = telebot.types.InlineKeyboardButton(text="15. Свойства изображения", callback_data='4_task_15')
+    button_fourth = telebot.types.InlineKeyboardButton(text="16. Показатель преломления", callback_data='4_task_16')
+    button_back = telebot.types.InlineKeyboardButton(text="◀️ Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_back)
-    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Четвёртый комплект, выберите задание",
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="✅ Комплект №4. Выберите задание (13-16)",
                           reply_markup=keyboard)
 
 
@@ -123,12 +130,12 @@ def sixth_set(call):
     chat_id = message.chat.id
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="17", callback_data='6_task_17')
-    button_second = telebot.types.InlineKeyboardButton(text="18", callback_data='6_task_18')
-    button_third = telebot.types.InlineKeyboardButton(text="19", callback_data='6_task_19')
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='back')
+    button_first = telebot.types.InlineKeyboardButton(text="17. Неподвижный блок", callback_data='6_task_17')
+    button_second = telebot.types.InlineKeyboardButton(text="18. Подвижный блок", callback_data='6_task_18')
+    button_third = telebot.types.InlineKeyboardButton(text="19. Рычаг", callback_data='6_task_19')
+    button_back = telebot.types.InlineKeyboardButton(text="◀️ Назад", callback_data='back')
     keyboard.add(button_first, button_second, button_third, button_back)
-    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Шестой комплект, выберите задание",
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="✅ Комплект №6. Выберите задание (17-19)",
                           reply_markup=keyboard)
 
 
@@ -138,17 +145,17 @@ def task_information(call):
     chat_id = message.chat.id
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="Таблица",
+    button_first = telebot.types.InlineKeyboardButton(text="🔍 Таблица анализа условия",
                                                       callback_data=call.data[:2] + 'link_table' + call.data[6:])
-    button_second = telebot.types.InlineKeyboardButton(text="Инстурцкция",
+    button_second = telebot.types.InlineKeyboardButton(text="📋 Текстовая инструкция",
                                                        callback_data=call.data[:2] + 'link_instruction' + call.data[6:])
-    button_third = telebot.types.InlineKeyboardButton(text="Бланк",
+    button_third = telebot.types.InlineKeyboardButton(text="📝 Образец бланка",
                                                       callback_data=call.data[:2] + 'link_blank' + call.data[6:])
-    button_fourth = telebot.types.InlineKeyboardButton(text="Схема",
+    button_fourth = telebot.types.InlineKeyboardButton(text="📊 Рисунок или схема",
                                                        callback_data=call.data[:2] + 'link_scheme' + call.data[6:])
-    button_fifth = telebot.types.InlineKeyboardButton(text="Видео",
+    button_fifth = telebot.types.InlineKeyboardButton(text="📽 Видеоинструкция",
                                                       callback_data=call.data[:2] + 'video_id' + call.data[6:])
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data='set_' + call.data[0])
+    button_back = telebot.types.InlineKeyboardButton(text="◀️ Назад", callback_data='set_' + call.data[0])
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth, button_back)
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text='Задача ' + call.data[7:],
                           reply_markup=keyboard)
@@ -170,7 +177,7 @@ def links(call):
     else:
         t = texts[call.data.split('_')[2]] + 'https://disk.yandex.ru/d/' + documents[p][s]
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_back = telebot.types.InlineKeyboardButton(text="Назад", callback_data=call.data[:2] + 'task_' + p)
+    button_back = telebot.types.InlineKeyboardButton(text="◀️ Назад", callback_data=call.data[:2] + 'task_' + p)
     keyboard.add(button_back)
     bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=t,
                           reply_markup=keyboard)
@@ -182,13 +189,17 @@ def choose_set(call):
     chat_id = message.chat.id
     message_id = message.message_id
     keyboard = telebot.types.InlineKeyboardMarkup()
-    button_first = telebot.types.InlineKeyboardButton(text="1", callback_data='set_1')
-    button_second = telebot.types.InlineKeyboardButton(text="2", callback_data='set_2')
-    button_third = telebot.types.InlineKeyboardButton(text="3", callback_data='set_3')
-    button_fourth = telebot.types.InlineKeyboardButton(text="4", callback_data='set_4')
-    button_fifth = telebot.types.InlineKeyboardButton(text="6", callback_data='set_6')
+    button_first = telebot.types.InlineKeyboardButton(text="№1. Выталкивающая сила и её свойства",
+                                                      callback_data='set_1')
+    button_second = telebot.types.InlineKeyboardButton(text="№2. Жесткость пружины и коэффициенты трения",
+                                                       callback_data='set_2')
+    button_third = telebot.types.InlineKeyboardButton(text="№3. Электричество",
+                                                      callback_data='set_3')
+    button_fourth = telebot.types.InlineKeyboardButton(text="№4. Геометрическая оптика", callback_data='set_4')
+    button_fifth = telebot.types.InlineKeyboardButton(text="№6. Простейшие механизмы: рычаги и блоки",
+                                                      callback_data='set_6')
     keyboard.add(button_first, button_second, button_third, button_fourth, button_fifth)
-    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Выберите комплект", reply_markup=keyboard)
+    bot.edit_message_text(chat_id=chat_id, message_id=message_id, text="Выберите комплект:", reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == '📖 Ресурсы для подготовки')
@@ -196,12 +207,12 @@ def resources(message):
     chat_id = message.chat.id
     keyboard = telebot.types.ReplyKeyboardMarkup()
     button_1 = telebot.types.InlineKeyboardButton(text="Для ОГЭ")
-    button_2 = telebot.types.InlineKeyboardButton(text="Источники для изучения физики")
-    button_3 = telebot.types.InlineKeyboardButton(text="Полезные приложения и сайты для учебы")
-    button_4 = telebot.types.InlineKeyboardButton(text="Учебники по физике (углубленные)")
-    button_5 = telebot.types.InlineKeyboardButton(text="Вернуться в главное меню")
+    button_2 = telebot.types.InlineKeyboardButton(text="Физика")
+    button_3 = telebot.types.InlineKeyboardButton(text="Сайты и приложения для учебы")
+    button_4 = telebot.types.InlineKeyboardButton(text="Учебники для любознательных")
+    button_5 = telebot.types.InlineKeyboardButton(text="◀️ Вернуться в главное меню")
     keyboard.add(button_1, button_2, button_3, button_4, button_5)
-    bot.send_message(chat_id, 'Выберите интересующий ресурс', reply_markup=keyboard)
+    bot.send_message(chat_id, 'Выберите интересующий ресурс:', reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == 'Для ОГЭ')
@@ -228,12 +239,12 @@ def advanced_physics(message):
 def about(message):
     chat_id = message.chat.id
     keyboard = telebot.types.ReplyKeyboardMarkup()
-    button_1 = telebot.types.InlineKeyboardButton(text="Вернуться в главное меню")
+    button_1 = telebot.types.InlineKeyboardButton(text="◀️ Вернуться в главное меню")
     keyboard.add(button_1)
     bot.send_message(chat_id, 'Описание проекта', reply_markup=keyboard)
 
 
-@bot.message_handler(func=lambda message: message.text == "Вернуться в главное меню")
+@bot.message_handler(func=lambda message: message.text == "◀️ Вернуться в главное меню")
 def welcome(message):
     chat_id = message.chat.id
     keyboard = telebot.types.ReplyKeyboardMarkup()
