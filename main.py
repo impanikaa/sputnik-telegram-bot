@@ -3,9 +3,9 @@ import time
 import telebot
 import json
 
-from config import BOT_TOKEN
+# from config import BOT_TOKEN
 
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot('7047336869:AAEjHcEJzgaPuEea9DdMd_Cmt9DTWK9NNf0')
 
 users = {}
 with open('documents.json') as f:
